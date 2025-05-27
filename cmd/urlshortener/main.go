@@ -65,8 +65,6 @@ func main() {
 		IdleTimeout:  120 * time.Second,
 	}
 
-	logger.Printf("서버 시작 중... 주소: http://localhost%s\n", serverAddr)
-
 	if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		logger.Fatalf("서버 시작 실패: %v", err)
 	}

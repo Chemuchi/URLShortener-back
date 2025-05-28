@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/rs/cors"
 	"log"
 	"miniproject/internal/api"
 	"miniproject/internal/shortener"
@@ -49,6 +50,18 @@ func main() {
 	mux.HandleFunc("POST /shorten", apiHandler.ShortenURL)
 	mux.HandleFunc("GET /{shortID}", apiHandler.RedirectURL)
 
+	// --- CORS 미들웨어 설정 시작 ---
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"https://your-frontend-domain.com", "http://localhost:3000"}, // 실제 프론트엔드 도메인으로 변경
+		AllowedMethods:   []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete, http.MethodOptions},
+		AllowedHeaders:   []string{"Content-Type", "Authorization", "X-Requested-With"}, // 필요한 헤더 추가
+		AllowCredentials: true,
+		// Debug: true, // 개발 중 디버깅 로그 활성화
+	})
+	// 기존 핸들러에 CORS 미들웨어 적용
+	handlerWithCORS := c.Handler(mux)
+	// --- CORS 미들웨어 설정 끝 ---
+
 	// 서버 주소 및 포트 설정
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -59,7 +72,7 @@ func main() {
 	// HTTP 서버 설정
 	server := &http.Server{
 		Addr:         serverAddr,
-		Handler:      mux,
+		Handler:      handlerWithCORS, // CORS 적용된 핸들러 사용
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 10 * time.Second,
 		IdleTimeout:  120 * time.Second,

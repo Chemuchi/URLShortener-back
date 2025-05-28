@@ -65,7 +65,7 @@ func main() {
 	// 서버 주소 및 포트 설정
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8080" // 기본 포트
+		port = "3000" // 기본 포트
 	}
 	serverAddr := ":" + port
 

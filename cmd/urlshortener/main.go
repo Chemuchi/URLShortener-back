@@ -52,7 +52,7 @@ func main() {
 
 	// --- CORS 미들웨어 설정 시작 ---
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"https://your-frontend-domain.com", "http://localhost:3000"}, // 실제 프론트엔드 도메인으로 변경
+		AllowedOrigins:   []string{"https://chemuchi-url.duckdns.org"}, // 실제 프론트엔드 도메인으로 변경
 		AllowedMethods:   []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete, http.MethodOptions},
 		AllowedHeaders:   []string{"Content-Type", "Authorization", "X-Requested-With"}, // 필요한 헤더 추가
 		AllowCredentials: true,

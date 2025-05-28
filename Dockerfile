@@ -18,6 +18,6 @@ WORKDIR /home/appuser
 
 COPY --from=builder /app/urlshortener .
 
-EXPOSE 8080
+EXPOSE 3000
 
 CMD ["./urlshortener"]
